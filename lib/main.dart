@@ -1,122 +1,132 @@
-import 'package:flutter/material.dart';
+import 'models/products.dart'; // Sesuaikan atau satukan file jika di DartPad
+
+// Arrow function format rupiah
+String formatRupiah(double nominal) => 'Rp ${nominal.toStringAsFixed(0)}';
+
+// Function dengan named & optional parameter
+double hitungHargaSetelahDiskon(double harga, {double persenDiskon = 0}) {
+  return harga - (harga * (persenDiskon / 100));
+}
+
+// Function hitung total belanja
+double hitungTotalBelanja(List<Product> keranjang) {
+  double total = 0.0;
+  for (var item in keranjang) {
+    total += item.price;
+  }
+  return total;
+}
 
 void main() {
-  runApp(const MyApp());
-}
+  const String namaToko = 'TokoKita Official';
+  final DateTime waktuBuka = DateTime.now();
+  var totalKaryawan = 5;
+  totalKaryawan = 6; // Valid
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  // namaToko = 'Toko Baru'; // Error: const tidak bisa diubah nilainya
+  // waktuBuka = DateTime.now(); // Error: final tidak bisa di-reassign
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+  int stokContoh = 15;
+  double hargaContoh = 125000.50;
+  String namaProdukContoh = 'Earphone TWS';
+  bool statusTersedia = true;
+
+  List<String> daftarKategori = ['Elektronik', 'Fashion', 'Makanan'];
+  Map<String, dynamic> dataMentah = {
+    'id': 'RAW-001',
+    'nama': namaProdukContoh,
+    'harga': hargaContoh,
+    'stok': stokContoh,
+    'tersedia': statusTersedia,
+  };
+
+  print('Toko: $namaToko, dibuka: $waktuBuka, Karyawan: $totalKaryawan');
+  print('Produk: $namaProdukContoh, Harga: $hargaContoh, Stok: $stokContoh');
+  print('Kategori: $daftarKategori');
+  print('Data Mentah: $dataMentah\n');
+
+  int jumlahBeli = 3;
+  double subtotal = hargaContoh * jumlahBeli;
+  int sisaStok = stokContoh - jumlahBeli;
+  print('Subtotal ($jumlahBeli item): $subtotal');
+  print('Sisa stok: $sisaStok');
+
+  bool stokCukup = stokContoh >= jumlahBeli;
+  bool layakTampil = stokContoh > 0 && hargaContoh > 0;
+  print('Stok cukup: $stokCukup');
+  print('Produk layak tampil: $layakTampil\n');
+
+  // if-else
+  String statusStok;
+  if (stokContoh > 5) {
+    statusStok = 'Tersedia';
+  } else if (stokContoh > 0) {
+    statusStok = 'Stok Terbatas';
+  } else {
+    statusStok = 'Habis';
   }
-}
+  print('Status stok: $statusStok');
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  // for loop
+  List<double> daftarHarga = [50000.0, 75000.0, 120000.0];
+  double totalSimulasi = 0.0;
+  for (var h in daftarHarga) {
+    totalSimulasi += h;
+  }
+  print('Total simulasi for loop: $totalSimulasi');
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  // while loop
+  int stokJalan = 3;
+  while (stokJalan > 0) {
+    print('Mengurangi stok: sisa $stokJalan');
+    stokJalan--;
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+  // switch-case diskon kategori
+  String kategoriCek = 'Fashion';
+  double persentaseDiskon;
+  switch (kategoriCek) {
+    case 'Elektronik':
+      persentaseDiskon = 10.0;
+      break;
+    case 'Fashion':
+      persentaseDiskon = 15.0;
+      break;
+    case 'Makanan':
+      persentaseDiskon = 5.0;
+      break;
+    default:
+      persentaseDiskon = 0.0;
   }
+  print('Diskon kategori $kategoriCek: $persentaseDiskon%\n');
+
+  double hargaAsli = 200000.0;
+  double hargaDiskon = hitungHargaSetelahDiskon(hargaAsli, persenDiskon: 20);
+  print('Harga asli: ${formatRupiah(hargaAsli)}');
+  print('Setelah diskon 20%: ${formatRupiah(hargaDiskon)}');
+
+  // Instance Product & DiscountedProduct
+  var p1 = dummyProducts[0];
+  var promoP = DiscountedProduct(
+    id: 'DISC-01',
+    name: 'Powerbank 20000mAh',
+    price: 300000.0,
+    imageUrl: 'https://placehold.co/150',
+    category: 'Elektronik',
+    stock: 5,
+    discountPercent: 25.0,
+  );
+
+  print(
+    'Produk 1: ${p1.name} | Status: ${p1.getStatusStok()} | Ket: ${p1.description ?? "Tanpa deskripsi"}',
+  );
+  print(
+    'Produk Promo: ${promoP.name} | Harga Awal: ${formatRupiah(promoP.price)} | Final: ${formatRupiah(promoP.finalPrice)}',
+  );
+
+  // Total Belanja
+  List<Product> keranjangBelanja = [dummyProducts[0], dummyProducts[2]];
+  print(
+    '\nTotal Belanja Keranjang: ${formatRupiah(hitungTotalBelanja(keranjangBelanja))}',
+  );
 }
