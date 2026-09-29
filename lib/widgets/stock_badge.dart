@@ -1,4 +1,3 @@
-// lib/widgets/stock_badge.dart
 import 'package:flutter/material.dart';
 
 class StockBadge extends StatelessWidget {

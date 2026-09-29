@@ -1,4 +1,3 @@
-// lib/widgets/category_tag.dart
 import 'package:flutter/material.dart';
 
 class CategoryTag extends StatelessWidget {

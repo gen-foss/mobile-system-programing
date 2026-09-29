@@ -1,4 +1,3 @@
-// lib/widgets/price_label.dart
 import 'package:flutter/material.dart';
 
 class PriceLabel extends StatelessWidget {

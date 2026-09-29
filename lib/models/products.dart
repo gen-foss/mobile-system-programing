@@ -1,5 +1,3 @@
-// lib/models/product.dart
-
 class Product {
   final String id;
   final String name;
@@ -18,8 +16,6 @@ class Product {
     required this.stock,
     this.description,
   });
-
-  // Method untuk menentukan status ketersediaan barang
   String getStatusStok() {
     if (stock > 5) {
       return 'Tersedia';
@@ -31,7 +27,6 @@ class Product {
   }
 }
 
-// Inheritance sederhana untuk produk diskon
 class DiscountedProduct extends Product {
   final double discountPercent;
 
@@ -45,8 +40,6 @@ class DiscountedProduct extends Product {
     super.description,
     required this.discountPercent,
   });
-
-  // Getter untuk menghitung harga setelah dipotong diskon
   double get finalPrice => price - (price * discountPercent / 100);
 }
 
@@ -58,32 +51,18 @@ double hitungTotalBelanja(List<Product> keranjang) {
   return total;
 }
 
-void tampilkanDaftarProduk(List<Product> produk) {
-  print('Daftar Produk:');
-  for (var item in produk) {
-    print('- ${item.name} (${item.id}): Rp ${item.price.toStringAsFixed(0)}');
-  }
-}
-
-void tampilkanDaftarKeranjang(List<Product> produk) {
-  print('Daftar Keranjang:');
-  for (var item in produk) {
-    print('- ${item.name} (${item.id}): Rp ${item.price.toStringAsFixed(0)}');
-  }
-}
-
-// 8 Data Dummy
 final List<Product> dummyProducts = [
   Product(
     id: 'PROD-001',
     name: 'Hydra',
     price: 450000000.0,
-    imageUrl: 'https://static.wikia.nocookie.net/mrplotkinot/images/1/19/Hydra.gif/revision/latest?cb=20130410004516',
+    imageUrl:
+        'https://static.wikia.nocookie.net/mrplotkinot/images/1/19/Hydra.gif',
     category: 'Reptil',
     stock: 12,
     description: 'Naga berkepala 9',
   ),
-  Product(
+  DiscountedProduct(
     id: 'PROD-002',
     name: 'Cerberus',
     price: 1750000000.0,
@@ -91,6 +70,7 @@ final List<Product> dummyProducts = [
     category: 'Mamalia',
     stock: 4,
     description: 'Anjing berkepala 3 penjaga neraka',
+    discountPercent: 15.0,
   ),
   Product(
     id: 'PROD-003',
@@ -117,7 +97,7 @@ final List<Product> dummyProducts = [
     imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS466iNtkn_xvfE1barfNi7qRK6bpR6LQU1E-m433fPw5nkrd12wkIps4A&s=10',
     category: 'Mamalia',
     stock: 0,
-    description: 'Kucing tanpa bulu, cocok untuk alergi',
+    description: 'makhluk berbadan singa dengan kepala manusia',
   ),
   Product(
     id: 'PROD-006',
@@ -128,18 +108,19 @@ final List<Product> dummyProducts = [
     stock: 50,
     description: 'Renyah dengan bumbu cabai asli.',
   ),
-  Product(
+  DiscountedProduct(
     id: 'PROD-007',
     name: 'Mermaid',
     price: 185000000.0,
-    imageUrl: 'https://static.wikia.nocookie.net/spongebob/images/c/ca/Mermaid_Man_stock_art.png/revision/latest?cb=20220807020103',
+    imageUrl: 'https://static.wikia.nocookie.net/spongebob/images/c/ca/Mermaid_Man_stock_art.png',
     category: 'Ikan',
     stock: 3,
     description:
         'Duyung berkualitas tinggi eksklusif, cocok untuk koleksi pribadi.',
+    discountPercent: 50.0,
   ),
   Product(
-    id: 'PROD-007',
+    id: 'PROD-008',
     name: 'Timun laut',
     price: 185000000.0,
     imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTd3NPJ45SvxvAdnUqaO9COukbnhhTCfE1gNMUVTWU1Wj5od2clsvwfA0&s=10',
@@ -148,38 +129,68 @@ final List<Product> dummyProducts = [
     description: 'Kevin si timun laut, legenda pemburu ubur-ubur',
   ),
   Product(
-    id: 'PROD-008',
-    name: 'Bahlil',
+    id: 'PROD-009',
+    name: 'Kitsune',
     price: 2100000000.0,
-    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Bahlil_Lahadalia%2C_Menteri_ESDM_%282024%29.jpg?utm_source=id.wikipedia.org&utm_campaign=index&utm_content=original',
+    imageUrl: 'https://cdng.europosters.eu/pod_public/1300/249901.png',
     category: 'Mamalia',
     stock: 0,
     description: null,
   ),
+  Product(
+    id: 'PROD-010',
+    name: 'Kraken',
+    price: 850000000.0,
+    imageUrl: 'https://cdn1-production-images-kly.akamaized.net/PK_9ae2ydXZOKfH2wddhGy5BmT4=/1280x720/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/2514221/original/023041900_1543837613-Kraken.jpg',
+    category: 'Mollusca',
+    stock: 1,
+    description: 'Gurita raksasa penghancur kapal bajak laut.',
+  ),
+  DiscountedProduct(
+    id: 'PROD-011',
+    name: 'Jormungandr',
+    price: 5000000000.0,
+    imageUrl: 'https://i.pinimg.com/736x/15/2f/91/152f91c7b7c4919108c4254929238fd6.jpg',
+    category: 'Reptil',
+    stock: 1,
+    description: 'Ular raksasa legendaris.',
+    discountPercent: 10.0,
+  ),
+  Product(
+    id: 'PROD-012',
+    name: 'Kucing Oren',
+    price: 50000.0,
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1p6ch6XRV5VGv13t04x0BVvG_8vIECQwKBgI6WdjP2E4h6OQFx8amkg0&s=10',
+    category: 'Mamalia',
+    stock: 99,
+    description: 'Ras terkuat di bumi',
+  ),
+  Product(
+    id: 'PROD-013',
+    name: 'Wyvern',
+    price: 120000000.0,
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRi8Eq6m7Bc0NlDp_nZF5FM4H3h9kQv81dFdFxr5OzVt5Mx1Y9A4Wtjbc&s=10',
+    category: 'Reptil',
+    stock: 0,
+    description: 'Mirip naga, tapi cuma punya 2 kaki dan sayap.',
+  ),
+  Product(
+    id: 'PROD-014',
+    name: 'Leviathan',
+    price: 900000000.0,
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDdZD8RDFySrJkKUEseLPaoKEE01hNve3csKLzpzseGQ&s',
+    category: 'Ikan',
+    stock: 2,
+    description: 'Monster laut raksasa pembawa badai.',
+  ),
+  DiscountedProduct(
+    id: 'PROD-015',
+    name: 'Chupacabra',
+    price: 15000000.0,
+    imageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpyMhouWVyhJ1DHX3cgntR3zXtuy7AeftrmjerLtXrAw&s=10',
+    category: 'Mamalia',
+    stock: 5,
+    description: 'Pemakan ternak handal dari Amerika Latin.',
+    discountPercent: 20.0,
+  ),
 ];
-
-void main() {
-  List<Product> allProduct = [
-    dummyProducts[0],
-    dummyProducts[1],
-    dummyProducts[2],
-    dummyProducts[3],
-    dummyProducts[4],
-    dummyProducts[5],
-    dummyProducts[6],
-    dummyProducts[7],
-    dummyProducts[8],
-  ];
-  List<Product> keranjang = [
-    dummyProducts[0],
-    dummyProducts[1],
-    dummyProducts[6],
-  ];
-
-  tampilkanDaftarProduk(allProduct);
-  print('-----------------------------------');
-  tampilkanDaftarKeranjang(keranjang);
-  print('-----------------------------------');
-  double totalBelanja = hitungTotalBelanja(keranjang);
-  print('Total Belanja: Rp ${totalBelanja.toStringAsFixed(0)}');
-}
