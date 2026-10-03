@@ -36,7 +36,31 @@ class HomePage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         itemCount: dummyProducts.length,
         itemBuilder: (context, index) {
-          return ProductCard(product: dummyProducts[index]);
+          final product = dummyProducts[index];
+          return ProductCard(
+            product: product,
+            onTap: () async {
+              // Menggunakan named route + mengirim data
+              final result = await Navigator.pushNamed(
+                context,
+                '/detail',
+                arguments: product,
+              );
+
+              // Menampilkan SnackBar jika ada nilai yang dikembalikan
+              if (result != null && context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Berhasil menambahkan $result item ke keranjang!',
+                    ),
+                    backgroundColor: Colors.green,
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
+          );
         },
       ),
     );

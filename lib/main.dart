@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'models/products.dart';
 import 'screens/home_page.dart';
+import 'screens/main_page.dart';
+import 'screens/product_detail_page.dart';
 
 void main() {
   runApp(const TokoKitaApp());
@@ -18,7 +21,17 @@ class TokoKitaApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: const HomePage(), // Langkah 5
+      // Halaman awal menggunakan Bottom Navigation
+      home: const MainPage(),
+
+      // Named routes
+      routes: {
+        '/home': (context) => const HomePage(),
+        '/detail': (context) {
+          final product = ModalRoute.of(context)!.settings.arguments as Product;
+          return ProductDetailPage(product: product);
+        },
+      },
     );
   }
 }
