@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../controllers/cart_controller.dart';
 import '../models/products.dart';
 import '../widgets/category_tag.dart';
 import '../widgets/price_label.dart';
@@ -20,19 +23,23 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   Widget build(BuildContext context) {
     final product = widget.product;
     final bool isDiscounted = product is DiscountedProduct;
+    final cartController = Get.find<CartController>();
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
         title: const Text('Detail Produk'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.back(),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Gambar Produk
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network(
@@ -43,20 +50,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
             ),
             const SizedBox(height: 16),
-
-            // Nama & Kategori
             Text(
               product.name,
-              style: const TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             CategoryTag(category: product.category),
             const SizedBox(height: 12),
-
-            // Harga
             if (isDiscounted) ...[
               Text(
                 'Rp ${product.price.toStringAsFixed(0)}',
@@ -69,17 +69,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               PriceLabel(price: (product as DiscountedProduct).finalPrice),
             ] else
               PriceLabel(price: product.price),
-
             const SizedBox(height: 12),
-
-            // Status Stok
-            StockBadge(
-              stock: product.stock,
-              status: product.getStatusStok(),
-            ),
+            StockBadge(stock: product.stock, status: product.getStatusStok()),
             const SizedBox(height: 16),
-
-            // Deskripsi
             const Text(
               'Deskripsi',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -94,8 +86,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
             ),
             const SizedBox(height: 24),
-
-            // Jumlah
             Row(
               children: [
                 const Text(
@@ -123,8 +113,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ],
             ),
             const SizedBox(height: 24),
-
-            // Tombol Tambah ke Keranjang
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -138,8 +126,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 onPressed: product.stock > 0
                     ? () {
-                        // Mengembalikan jumlah ke halaman sebelumnya
-                        Navigator.pop(context, quantity);
+                        cartController.addToCart(product, quantity: quantity);
+                        Get.back();
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          Get.snackbar(
+                            'Berhasil',
+                            '${product.name} ditambahkan ke keranjang',
+                            snackPosition: SnackPosition.BOTTOM,
+                            duration: const Duration(seconds: 2),
+                            backgroundColor: Colors.green,
+                            colorText: Colors.white,
+                          );
+                        });
                       }
                     : null,
                 icon: const Icon(Icons.shopping_cart),

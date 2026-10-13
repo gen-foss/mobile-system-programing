@@ -6,13 +6,9 @@ import 'price_label.dart';
 
 class ProductCard extends StatefulWidget {
   final Product product;
-  final VoidCallback? onTap; // <-- tambahkan ini
+  final VoidCallback? onTap;
 
-  const ProductCard({
-    super.key,
-    required this.product,
-    this.onTap, // <-- tambahkan ini
-  });
+  const ProductCard({super.key, required this.product, this.onTap});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -26,7 +22,6 @@ class _ProductCardState extends State<ProductCard> {
     bool isDiscounted = widget.product is DiscountedProduct;
 
     return GestureDetector(
-      // <-- bungkus dengan GestureDetector
       onTap: widget.onTap,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

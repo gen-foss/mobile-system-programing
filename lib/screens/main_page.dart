@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/cart_controller.dart';
+import 'cart_page.dart';
 import 'home_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,8 +17,8 @@ class _MainPageState extends State<MainPage> {
 
   final List<Widget> _pages = [
     const HomePage(),
-    const CartPage(), // Placeholder
-    const ProfilePage(), // Placeholder
+    const CartPage(),
+    const ProfilePage(),
   ];
 
   @override
@@ -44,41 +47,6 @@ class _MainPageState extends State<MainPage> {
   }
 }
 
-// Placeholder Keranjang
-class CartPage extends StatelessWidget {
-  const CartPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Keranjang'),
-        backgroundColor: Colors.blue,
-        foregroundColor: Colors.white,
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.shopping_cart_outlined, size: 80, color: Colors.grey),
-            SizedBox(height: 16),
-            Text(
-              'Keranjang masih kosong',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Yuk belanja dulu!',
-              style: TextStyle(fontSize: 14, color: Colors.grey),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Placeholder Profil
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
@@ -102,7 +70,7 @@ class ProfilePage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Fitur akan dilengkapi pada pertemuan berikutnya',
+              'Fitur akan dilengkapi nanti',
               style: TextStyle(fontSize: 14, color: Colors.grey),
               textAlign: TextAlign.center,
             ),

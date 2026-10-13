@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controllers/cart_controller.dart';
 import '../models/products.dart';
 import '../widgets/product_card.dart';
+import 'product_detail_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartController = Get.find<CartController>();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -28,7 +33,40 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(Icons.shopping_cart),
+
+            Obx(() {
+              final total = cartController.totalItem;
+              return Stack(
+                children: [
+                  const Icon(Icons.shopping_cart, size: 28),
+                  if (total > 0)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '$total',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            }),
           ],
         ),
       ),
@@ -39,26 +77,8 @@ class HomePage extends StatelessWidget {
           final product = dummyProducts[index];
           return ProductCard(
             product: product,
-            onTap: () async {
-              // Menggunakan named route + mengirim data
-              final result = await Navigator.pushNamed(
-                context,
-                '/detail',
-                arguments: product,
-              );
-
-              // Menampilkan SnackBar jika ada nilai yang dikembalikan
-              if (result != null && context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      'Berhasil menambahkan $result item ke keranjang!',
-                    ),
-                    backgroundColor: Colors.green,
-                    duration: const Duration(seconds: 2),
-                  ),
-                );
-              }
+            onTap: () {
+              Get.to(() => ProductDetailPage(product: product));
             },
           );
         },
